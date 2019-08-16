@@ -1,6 +1,3 @@
-def birdIaCECSStateS3 = "javahome-hari-1234"
-def birdIaCECSStateS3Region = "ap-south-1"
-
 properties(
 	[parameters(
 		[string(defaultValue: 'javahome-hari-1234', 
@@ -32,7 +29,7 @@ pipeline {
 		stage('S3-Terraform State'){
 			steps {
 			   script{
-			      makeSureS3BucketExists(birdIaCECSStateS3,birdIaCECSStateS3Region)
+			      makeSureS3BucketExists(params.birdIaCECSStateS3,params.birdIaCECSStateS3Region)
 			   }
 			}
 		}
@@ -41,7 +38,7 @@ pipeline {
             steps {
 				sh """
 				    terraform init \
-					    -backend-config="bucket=${birdIaCECSStateS3}"
+					    -backend-config="bucket=${params.birdIaCECSStateS3}"
 				"""
             }
         }
