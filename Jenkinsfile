@@ -1,6 +1,18 @@
 def birdIaCECSStateS3 = "javahome-hari-1234"
 def birdIaCECSStateS3Region = "ap-south-1"
 
+properties(
+	[parameters(
+		[string(defaultValue: 'javahome-hari-1234', 
+			description: 'Choose S3 bucket to store state file', 
+			name: 'birdIaCECSStateS3', trim: false), 
+		 string(defaultValue: 'ap-south-1', 
+			description: 'Choose the region for S3 bucket', 
+			name: 'birdIaCECSStateS3Region', trim: false)
+		])
+	]
+)
+
 pipeline {
     agent any
 	
@@ -11,7 +23,9 @@ pipeline {
     stages {
         stage('GHE Clone/Pull') {
             steps {
-				        checkout scm
+		    echo params.birdIaCECSStateS3
+		    
+		    checkout scm
             }
         }
 		
